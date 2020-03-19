@@ -3,3 +3,8 @@ A final assignment for CMPT 419/726 where we put together various tools from dif
 
 
 Kaggle Rotten Tomatoes dataset: https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data
+
+
+Clean.py: 
+clean.py takes in a file (tsv) and formats it correctly into 1 column. Processes the file removing urls, (unnamed,deleted,removed) posts, posts containing any mention of "thank you for following me", any non ascii characters like emojis and other language scripts (like arabic), any hashtags or user mentions, and unnecessary symbols or acronyms. 
+Then overwrites the file wit the new data. 
