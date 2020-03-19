@@ -9,7 +9,9 @@ scraper.py takes in the name of the subreddit and collects each thread's title, 
   -s S        subreddit to scrape
   -d D        duration (in days)
   -o O        output .csv file
+
 Example of usage: $ python scraper.py -s worldnews -d 15 -o out.tsv
+
 this command would collect the subreddit "worldnews" threads (threads' title, body, and comments) from the past 15 days as a list of strings and write the results to the file "out.tsv"
 
 Clean.py: 
