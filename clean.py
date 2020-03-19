@@ -24,7 +24,7 @@ def clean_data(file_path):
     file['Posts'] = file['Posts'].str.replace('\[deleted\]', '', regex=True)# Remove deleted messages
     
     # Replace symbols and acronyms 
-    file = file.replace({'Posts':{'\n':'','\(':'','\)':'','\[':'','\]':'','\?':'','\.':' ',';':'',':':'','!':'','\|':'','~':'','lol':'','Lol':'','LOL':'','&amp':''}}, regex=True)
+    file = file.replace({'Posts':{'\n':'','\(':'','\)':'','\[':'','\]':'','\?':'','\.':' ',';':'',':':'','!':'','\|':'','~':'','&amp':''}}, regex=True)
     file = file[file['Posts'].str.contains("[a-z]")] # Remove anything without lower case letters in it
     
     # Overwrite file
