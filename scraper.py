@@ -47,9 +47,9 @@ if __name__ == '__main__':
     # include a parser for command line arguments
     parser = argparse.ArgumentParser(description='a script for the subreddits scraper')
     parser.add_argument("-s", help="subreddit to scrape", type=str)
-    parser.add_argument("-b", help="before X days/hours ago", type=str, default=None)
-    parser.add_argument("-a", help="after X days/hours ago", type=str, default=None)
-    parser.add_argument("-o", help="output .csv file", type=str, default="output.tsv")
+    parser.add_argument("-b", help="before X days/hours/minutes/seconds ago", type=str, default=None)
+    parser.add_argument("-a", help="after X days/hours/minutes/seconds ago", type=str, default=None)
+    parser.add_argument("-o", help="output .tsv file", type=str, default="output.tsv")
     args = parser.parse_args()
 
     if not args.s:
