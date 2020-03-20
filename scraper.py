@@ -4,9 +4,13 @@ import json
 import requests
 import csv
 
-def get_submissions(subreddit, size, duration):
-    submission_url = 'https://api.pushshift.io/reddit/search/submission/?subreddit={}&size={}&after={}d&is_video=False'
-    response = requests.get(url=submission_url.format(subreddit, size, duration))
+def get_submissions(subreddit, size, before, after):
+    submission_url = 'https://api.pushshift.io/reddit/search/submission/?subreddit={}&size={}&is_video=False'
+    if after:
+        submission_url += "&after={}".format(after)
+    if before:
+        submission_url += "&before={}".format(before)
+    response = requests.get(url=submission_url.format(subreddit, size, before))
     try:
         response = response.json()
     except:
@@ -22,9 +26,13 @@ def get_submissions(subreddit, size, duration):
             pass
     return submissions
 
-def get_comments(subreddit, size, duration):
-    comment_url = 'https://api.pushshift.io/reddit/search/comment/?subreddit={}&size={}&after={}d'
-    response = requests.get(url=comment_url.format(subreddit, size, duration))
+def get_comments(subreddit, size, before, after):
+    comment_url = 'https://api.pushshift.io/reddit/search/comment/?subreddit={}&size={}'
+    if after:
+        comment_url += "&after={}".format(after)
+    if before:
+        comment_url += "&before={}".format(before)
+    response = requests.get(url=comment_url.format(subreddit, size))
     try:
         response = response.json()
     except:
@@ -39,7 +47,8 @@ if __name__ == '__main__':
     # include a parser for command line arguments
     parser = argparse.ArgumentParser(description='a script for the subreddits scraper')
     parser.add_argument("-s", help="subreddit to scrape", type=str)
-    parser.add_argument("-d", help="duration (in days)", type=int, default=30)
+    parser.add_argument("-b", help="before X days/hours ago", type=str, default=None)
+    parser.add_argument("-a", help="after X days/hours ago", type=str, default=None)
     parser.add_argument("-o", help="output .csv file", type=str, default="output.tsv")
     args = parser.parse_args()
 
@@ -48,12 +57,13 @@ if __name__ == '__main__':
 
     subreddit = args.s
     size = 1000
-    duration = args.d
+    before = args.b
+    after = args.a
     output = args.o
 
     # scrape comments and submissions
-    comments = get_comments(subreddit, size, duration)
-    submissions = get_submissions(subreddit, size, duration)
+    comments = get_comments(subreddit, size, before, after)
+    submissions = get_submissions(subreddit, size, before, after)
     results = comments + submissions
     
     # write result to .tsv file
