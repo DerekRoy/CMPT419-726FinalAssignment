@@ -20,7 +20,7 @@ documents = []
 print(pos_data[:10])
 
 # stop_words = set(stopwords.words('english'))
-word_filter = ["J", "R", "v"]
+word_filter = ["J", "R", "V"]
 
 for datum in pos_data:
     documents.append((datum, 'pos'))
