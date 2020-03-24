@@ -35,9 +35,11 @@ Trains a sentiment model based on Twitter samples from NLTK's Corpus
 - Requires a folder named "pickles" in the working directory
 
 run with:
-- python reddit_sentiment_model.py
+> python reddit_sentiment_model.py
+
 or to download libraries and run in a virtual environment
-- pipenv run python reddit_sentiment_model.py
+
+> pipenv run python reddit_sentiment_model.py
 
 reddit_sentiment_module.py
 
@@ -54,6 +56,8 @@ reddit_sentiment_test.py
 Sample implementation of reddit_sentiment_module.py on r/Stadia
 
 run with:
-- python reddit_sentiment_test.py
+> python reddit_sentiment_test.py
+
 or to download libraries and run in a virtual environment
-- pipenv run python reddit_sentiment_test.py
+
+> pipenv run python reddit_sentiment_test.py
