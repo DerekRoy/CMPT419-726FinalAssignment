@@ -1,9 +1,7 @@
-try: 
-    import pandas as pd
-except:
-    !pip3 install pandas
-    import pandas as pd
-    
+import pandas as pd
+import os
+import argparse
+
 def clean_data(file_path):
     # Prepare the pandas dataframe
     file1 = pd.read_csv(file_path, sep="\t").T
@@ -29,3 +27,13 @@ def clean_data(file_path):
     
     # Overwrite file
     file.to_csv(file_path,index=False,header=True,sep='\t')
+
+if __name__ == '__main__':
+    # include a parser for command line arguments
+    parser = argparse.ArgumentParser(description='a script for the subreddits scraper')
+    parser.add_argument("-i", help="input .tsv file", type=str, default="output.tsv")
+    args = parser.parse_args()
+
+    file_path = os.path.abspath(args.i)
+    clean_data(file_path)
+    print("Data in file {} has been filtered!".format(args.i))
