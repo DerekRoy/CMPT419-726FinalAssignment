@@ -1,16 +1,15 @@
 import reddit_sentiment_module as red_sen
-from scraper.py import get_comments, get_submissions
-from clean.py import clean_data
+from scraper import get_comments, get_submissions
+from clean import clean_data
+import argparse
+import csv
 
 
 if __name__ == '__main__':
 
     # include a parser for command line arguments
     parser = argparse.ArgumentParser(description='a script for the subreddits scraper')
-    parser.add_argument("-s", help="subreddit to scrape", type=str)
-    parser.add_argument("-b", help="before X days/hours/minutes/seconds ago", type=str, default=None)
-    parser.add_argument("-a", help="after X days/hours/minutes/seconds ago", type=str, default=None)
-    parser.add_argument("-o", help="output .tsv file", type=str, default="output.tsv")
+    parser.add_argument("-i", help="input .tsv file", type=str, default=None)
     args = parser.parse_args()
 
     comments = [
@@ -36,36 +35,17 @@ if __name__ == '__main__':
         "Nice pics, shows Stadia is a powerful platform. But i assume those are using Stadia screen capture? If so they dont account for being streamed. I dont want to be negative, i love Stadia, but it just triggers something when i see people posting such images without disclaimer."
     ]
 
-    if args.s:
-        subreddit = args.s
-        size = 1000
-        before = args.b
-        after = args.a
-        output = args.o
+    if args.i:
+        input_file = args.i
+        tsv_file = open(input_file, encoding="utf-8")
+        read_tsv = csv.reader(tsv_file, delimiter="\t")
+        comments = []
 
-        # scrape comments and submissions
-        comments = get_comments(subreddit, size, before, after)
-        submissions = get_submissions(subreddit, size, before, after)
-        comments = comments + submissions
-
-        # write result to .tsv file
-        with open(output, 'w', newline='') as f_output:
-            tsv_output = csv.writer(f_output, delimiter='\t')
-            tsv_output.writerow(results)
-
-        print("Scraping the subreddit {} is done! Results are saved in {}".format(subreddit, output))    
-
-        clean_data(output)
-        print("Data in {} has been filtered!".format(output))  
-
-        # read the data from the .tsv file into a string
-        with open('output', 'r') as file:
-            comments = file.read().replace('\n', '')
-
-        # split the string into list of comments and submissions
-        comments = comments.split("\t")
+        for row in read_tsv:
+            for elem in row:
+                comments.append(elem)
 
     for comment in comments:
         print(comment)
-    print(red_sen.classify(comment))
+        print(red_sen.classify(comment))
 
