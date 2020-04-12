@@ -132,7 +132,7 @@ class VoteSystem(ClassifierI):
 classifiers = [naive_bayes_classifier, multinomial_nb_classifier, bernoulli_nb_classifier, sgdc_classifier, svc_classifier, linear_svc_classifier, nu_svc_classifier]
 names = ["Naive Bayes", "Multinomial Naive Bayes", "Bernoulli Naive Bayes", "SGD Clasifier", "Support Vector Classifier", "Linear Support Vector Classifier", "NU Support Vector Classifier"]
 
-for i in range(4,8):
+for i in range(2,8):
     combo = list(itertools.combinations(names, i))
     print("Pick {} classifiers:".format(i))
     for j,c in enumerate(combo):
@@ -143,9 +143,6 @@ for i in range(4,8):
             cs.append(classifiers[names.index(x)])
         vs = VoteSystem(cs)
         accuracy = nltk.classify.accuracy(vs, val_set)[0]
-        if accuracy >= .70:
-            statement = statement[:-2]+"} "+"Accuracy: {}".format(accuracy)
-            print(statement)
-        else:
-            break
+        statement = statement[:-2]+"} "+"Accuracy: {}".format(accuracy)
+        print(statement)
     print()
